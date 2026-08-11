@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as BuyurtmalarimRouteImport } from './routes/buyurtmalarim'
 import { Route as KirishRouteImport } from './routes/kirish'
 import { Route as SavatRouteImport } from './routes/savat'
@@ -17,6 +18,11 @@ import { Route as SavatRouteImport } from './routes/savat'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuyurtmalarimRoute = BuyurtmalarimRouteImport.update({
@@ -37,12 +43,14 @@ const SavatRoute = SavatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
@@ -50,20 +58,22 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/buyurtmalarim' | '/kirish' | '/savat'
+  fullPaths: '/' | '/admin' | '/buyurtmalarim' | '/kirish' | '/savat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/buyurtmalarim' | '/kirish' | '/savat'
-  id: '__root__' | '/' | '/buyurtmalarim' | '/kirish' | '/savat'
+  to: '/' | '/admin' | '/buyurtmalarim' | '/kirish' | '/savat'
+  id: '__root__' | '/' | '/admin' | '/buyurtmalarim' | '/kirish' | '/savat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   BuyurtmalarimRoute: typeof BuyurtmalarimRoute
   KirishRoute: typeof KirishRoute
   SavatRoute: typeof SavatRoute
@@ -76,6 +86,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/buyurtmalarim': {
@@ -104,6 +121,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   BuyurtmalarimRoute: BuyurtmalarimRoute,
   KirishRoute: KirishRoute,
   SavatRoute: SavatRoute,

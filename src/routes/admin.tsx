@@ -126,6 +126,8 @@ function AdminDashboard() {
   );
 }
 
+type OrderStatus = "yangi" | "tayyorlanmoqda" | "yetkazilmoqda" | "yetkazildi";
+
 type AdminOrder = {
   id: string;
   created_at: string;
@@ -154,10 +156,10 @@ function AdminOrders() {
   });
 
   const updateStatus = useMutation({
-    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+    mutationFn: async ({ id, status }: { id: string; status: OrderStatus }) => {
       const { error } = await supabase
         .from("orders")
-        .update({ status: status as AdminOrder["status"] })
+        .update({ status })
         .eq("id", id);
       if (error) throw error;
     },
@@ -190,7 +192,7 @@ function AdminOrders() {
               <Badge variant={o.status === "yetkazildi" ? "default" : "secondary"}>
                 {STATUS_LABELS[o.status] ?? o.status}
               </Badge>
-              <Select value={o.status} onValueChange={(v) => updateStatus.mutate({ id: o.id, status: v })}>
+              <Select value={o.status} onValueChange={(v) => updateStatus.mutate({ id: o.id, status: v as OrderStatus })}>
                 <SelectTrigger className="w-48">
                   <SelectValue />
                 </SelectTrigger>
