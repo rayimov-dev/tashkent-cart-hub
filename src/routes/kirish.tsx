@@ -33,7 +33,10 @@ function AuthPage() {
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
-    if (error) return toast.error("Kirishda xatolik", { description: error.message });
+    if (error) {
+      toast.error("Kirishda xatolik", { description: error.message });
+      return;
+    }
     toast.success("Xush kelibsiz!");
     navigate({ to: "/" });
   }
@@ -50,7 +53,10 @@ function AuthPage() {
       },
     });
     setLoading(false);
-    if (error) return toast.error("Ro'yxatdan o'tishda xatolik", { description: error.message });
+    if (error) {
+      toast.error("Ro'yxatdan o'tishda xatolik", { description: error.message });
+      return;
+    }
     if (!data.session) {
       toast.success("Emailingizni tasdiqlang", { description: "Pochtangizga tasdiqlash havolasi yuborildi." });
       return;
