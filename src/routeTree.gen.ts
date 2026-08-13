@@ -11,9 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AdminKirishRouteImport } from './routes/admin-kirish'
 import { Route as BuyurtmalarimRouteImport } from './routes/buyurtmalarim'
 import { Route as KirishRouteImport } from './routes/kirish'
 import { Route as SavatRouteImport } from './routes/savat'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminBuyurtmalarRouteImport } from './routes/admin.buyurtmalar'
+import { Route as AdminMahsulotlarRouteImport } from './routes/admin.mahsulotlar'
+import { Route as AdminMijozlarRouteImport } from './routes/admin.mijozlar'
+import { Route as AdminSozlamalarRouteImport } from './routes/admin.sozlamalar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminKirishRoute = AdminKirishRouteImport.update({
+  id: '/admin-kirish',
+  path: '/admin-kirish',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuyurtmalarimRoute = BuyurtmalarimRouteImport.update({
@@ -40,40 +51,116 @@ const SavatRoute = SavatRouteImport.update({
   path: '/savat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBuyurtmalarRoute = AdminBuyurtmalarRouteImport.update({
+  id: '/buyurtmalar',
+  path: '/buyurtmalar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMahsulotlarRoute = AdminMahsulotlarRouteImport.update({
+  id: '/mahsulotlar',
+  path: '/mahsulotlar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMijozlarRoute = AdminMijozlarRouteImport.update({
+  id: '/mijozlar',
+  path: '/mijozlar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSozlamalarRoute = AdminSozlamalarRouteImport.update({
+  id: '/sozlamalar',
+  path: '/sozlamalar',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin-kirish': typeof AdminKirishRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
+  '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
+  '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
+  '/admin/mijozlar': typeof AdminMijozlarRoute
+  '/admin/sozlamalar': typeof AdminSozlamalarRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin-kirish': typeof AdminKirishRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
+  '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
+  '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
+  '/admin/mijozlar': typeof AdminMijozlarRoute
+  '/admin/sozlamalar': typeof AdminSozlamalarRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/admin-kirish': typeof AdminKirishRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
+  '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
+  '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
+  '/admin/mijozlar': typeof AdminMijozlarRoute
+  '/admin/sozlamalar': typeof AdminSozlamalarRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/buyurtmalarim' | '/kirish' | '/savat'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/admin-kirish'
+    | '/buyurtmalarim'
+    | '/kirish'
+    | '/savat'
+    | '/admin/buyurtmalar'
+    | '/admin/mahsulotlar'
+    | '/admin/mijozlar'
+    | '/admin/sozlamalar'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/buyurtmalarim' | '/kirish' | '/savat'
-  id: '__root__' | '/' | '/admin' | '/buyurtmalarim' | '/kirish' | '/savat'
+  to:
+    | '/'
+    | '/admin-kirish'
+    | '/buyurtmalarim'
+    | '/kirish'
+    | '/savat'
+    | '/admin/buyurtmalar'
+    | '/admin/mahsulotlar'
+    | '/admin/mijozlar'
+    | '/admin/sozlamalar'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/admin-kirish'
+    | '/buyurtmalarim'
+    | '/kirish'
+    | '/savat'
+    | '/admin/buyurtmalar'
+    | '/admin/mahsulotlar'
+    | '/admin/mijozlar'
+    | '/admin/sozlamalar'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AdminKirishRoute: typeof AdminKirishRoute
   BuyurtmalarimRoute: typeof BuyurtmalarimRoute
   KirishRoute: typeof KirishRoute
   SavatRoute: typeof SavatRoute
@@ -93,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin-kirish': {
+      id: '/admin-kirish'
+      path: '/admin-kirish'
+      fullPath: '/admin-kirish'
+      preLoaderRoute: typeof AdminKirishRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/buyurtmalarim': {
@@ -116,12 +210,66 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SavatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/buyurtmalar': {
+      id: '/admin/buyurtmalar'
+      path: '/buyurtmalar'
+      fullPath: '/admin/buyurtmalar'
+      preLoaderRoute: typeof AdminBuyurtmalarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/mahsulotlar': {
+      id: '/admin/mahsulotlar'
+      path: '/mahsulotlar'
+      fullPath: '/admin/mahsulotlar'
+      preLoaderRoute: typeof AdminMahsulotlarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/mijozlar': {
+      id: '/admin/mijozlar'
+      path: '/mijozlar'
+      fullPath: '/admin/mijozlar'
+      preLoaderRoute: typeof AdminMijozlarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/sozlamalar': {
+      id: '/admin/sozlamalar'
+      path: '/sozlamalar'
+      fullPath: '/admin/sozlamalar'
+      preLoaderRoute: typeof AdminSozlamalarRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminBuyurtmalarRoute: typeof AdminBuyurtmalarRoute
+  AdminMahsulotlarRoute: typeof AdminMahsulotlarRoute
+  AdminMijozlarRoute: typeof AdminMijozlarRoute
+  AdminSozlamalarRoute: typeof AdminSozlamalarRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminBuyurtmalarRoute: AdminBuyurtmalarRoute,
+  AdminMahsulotlarRoute: AdminMahsulotlarRoute,
+  AdminMijozlarRoute: AdminMijozlarRoute,
+  AdminSozlamalarRoute: AdminSozlamalarRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AdminKirishRoute: AdminKirishRoute,
   BuyurtmalarimRoute: BuyurtmalarimRoute,
   KirishRoute: KirishRoute,
   SavatRoute: SavatRoute,
@@ -129,3 +277,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
