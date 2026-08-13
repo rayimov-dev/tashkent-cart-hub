@@ -107,6 +107,7 @@ export type Database = {
           is_active: boolean
           name: string
           price: number
+          stock_quantity: number
         }
         Insert: {
           created_at?: string
@@ -116,6 +117,7 @@ export type Database = {
           is_active?: boolean
           name: string
           price?: number
+          stock_quantity?: number
         }
         Update: {
           created_at?: string
@@ -125,6 +127,7 @@ export type Database = {
           is_active?: boolean
           name?: string
           price?: number
+          stock_quantity?: number
         }
         Relationships: []
       }
@@ -203,7 +206,12 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "customer"
-      order_status: "yangi" | "tayyorlanmoqda" | "yetkazilmoqda" | "yetkazildi"
+      order_status:
+        | "yangi"
+        | "tayyorlanmoqda"
+        | "yetkazilmoqda"
+        | "yetkazildi"
+        | "bekor_qilindi"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -332,7 +340,13 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "customer"],
-      order_status: ["yangi", "tayyorlanmoqda", "yetkazilmoqda", "yetkazildi"],
+      order_status: [
+        "yangi",
+        "tayyorlanmoqda",
+        "yetkazilmoqda",
+        "yetkazildi",
+        "bekor_qilindi",
+      ],
     },
   },
 } as const
