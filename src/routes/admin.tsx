@@ -29,13 +29,13 @@ export const Route = createFileRoute("/admin")({
   component: AdminLayout,
 });
 
-const NAV = [
+const NAV: { to: "/admin" | "/admin/mahsulotlar" | "/admin/buyurtmalar" | "/admin/mijozlar" | "/admin/sozlamalar"; label: string; icon: typeof LayoutDashboard; exact?: boolean }[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/mahsulotlar", label: "Mahsulotlar", icon: Package },
   { to: "/admin/buyurtmalar", label: "Buyurtmalar", icon: ClipboardList },
   { to: "/admin/mijozlar", label: "Mijozlar", icon: Users },
   { to: "/admin/sozlamalar", label: "Sozlamalar", icon: Settings },
-] as const;
+];
 
 function AdminLayout() {
   const { user, loading } = useSession();

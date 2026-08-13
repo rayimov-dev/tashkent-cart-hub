@@ -16,6 +16,8 @@ import { Route as BuyurtmalarimRouteImport } from './routes/buyurtmalarim'
 import { Route as KirishRouteImport } from './routes/kirish'
 import { Route as SavatRouteImport } from './routes/savat'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminBuyurtmalarRouteImport } from './routes/admin.buyurtmalar'
+import { Route as AdminMahsulotlarRouteImport } from './routes/admin.mahsulotlar'
 import { Route as AdminMijozlarRouteImport } from './routes/admin.mijozlar'
 import { Route as AdminSozlamalarRouteImport } from './routes/admin.sozlamalar'
 
@@ -54,6 +56,16 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminBuyurtmalarRoute = AdminBuyurtmalarRouteImport.update({
+  id: '/buyurtmalar',
+  path: '/buyurtmalar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMahsulotlarRoute = AdminMahsulotlarRouteImport.update({
+  id: '/mahsulotlar',
+  path: '/mahsulotlar',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminMijozlarRoute = AdminMijozlarRouteImport.update({
   id: '/mijozlar',
   path: '/mijozlar',
@@ -72,6 +84,8 @@ export interface FileRoutesByFullPath {
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
+  '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
+  '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
   '/admin/mijozlar': typeof AdminMijozlarRoute
   '/admin/sozlamalar': typeof AdminSozlamalarRoute
   '/admin/': typeof AdminIndexRoute
@@ -82,6 +96,8 @@ export interface FileRoutesByTo {
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
+  '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
+  '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
   '/admin/mijozlar': typeof AdminMijozlarRoute
   '/admin/sozlamalar': typeof AdminSozlamalarRoute
   '/admin': typeof AdminIndexRoute
@@ -94,6 +110,8 @@ export interface FileRoutesById {
   '/buyurtmalarim': typeof BuyurtmalarimRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
+  '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
+  '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
   '/admin/mijozlar': typeof AdminMijozlarRoute
   '/admin/sozlamalar': typeof AdminSozlamalarRoute
   '/admin/': typeof AdminIndexRoute
@@ -107,6 +125,8 @@ export interface FileRouteTypes {
     | '/buyurtmalarim'
     | '/kirish'
     | '/savat'
+    | '/admin/buyurtmalar'
+    | '/admin/mahsulotlar'
     | '/admin/mijozlar'
     | '/admin/sozlamalar'
     | '/admin/'
@@ -117,6 +137,8 @@ export interface FileRouteTypes {
     | '/buyurtmalarim'
     | '/kirish'
     | '/savat'
+    | '/admin/buyurtmalar'
+    | '/admin/mahsulotlar'
     | '/admin/mijozlar'
     | '/admin/sozlamalar'
     | '/admin'
@@ -128,6 +150,8 @@ export interface FileRouteTypes {
     | '/buyurtmalarim'
     | '/kirish'
     | '/savat'
+    | '/admin/buyurtmalar'
+    | '/admin/mahsulotlar'
     | '/admin/mijozlar'
     | '/admin/sozlamalar'
     | '/admin/'
@@ -193,6 +217,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/buyurtmalar': {
+      id: '/admin/buyurtmalar'
+      path: '/buyurtmalar'
+      fullPath: '/admin/buyurtmalar'
+      preLoaderRoute: typeof AdminBuyurtmalarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/mahsulotlar': {
+      id: '/admin/mahsulotlar'
+      path: '/mahsulotlar'
+      fullPath: '/admin/mahsulotlar'
+      preLoaderRoute: typeof AdminMahsulotlarRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/mijozlar': {
       id: '/admin/mijozlar'
       path: '/mijozlar'
@@ -211,12 +249,16 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminBuyurtmalarRoute: typeof AdminBuyurtmalarRoute
+  AdminMahsulotlarRoute: typeof AdminMahsulotlarRoute
   AdminMijozlarRoute: typeof AdminMijozlarRoute
   AdminSozlamalarRoute: typeof AdminSozlamalarRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminBuyurtmalarRoute: AdminBuyurtmalarRoute,
+  AdminMahsulotlarRoute: AdminMahsulotlarRoute,
   AdminMijozlarRoute: AdminMijozlarRoute,
   AdminSozlamalarRoute: AdminSozlamalarRoute,
   AdminIndexRoute: AdminIndexRoute,

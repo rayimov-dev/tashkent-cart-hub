@@ -8,6 +8,7 @@ export type Product = {
   price: number;
   image_url: string | null;
   is_active: boolean;
+  stock_quantity: number;
 };
 
 export type StoreSettings = {
@@ -23,7 +24,7 @@ export const productsQuery = (includeInactive = false) =>
       if (!includeInactive) q = q.eq("is_active", true);
       const { data, error } = await q;
       if (error) throw error;
-      return (data ?? []).map((p) => ({ ...p, price: Number(p.price) })) as Product[];
+      return (data ?? []).map((p) => ({ ...p, price: Number(p.price), stock_quantity: Number((p as { stock_quantity?: number }).stock_quantity ?? 0) })) as Product[];
     },
   });
 
@@ -57,4 +58,5 @@ export const STATUS_LABELS: Record<string, string> = {
   tayyorlanmoqda: "Tayyorlanmoqda",
   yetkazilmoqda: "Yetkazilmoqda",
   yetkazildi: "Yetkazildi",
+  bekor_qilindi: "Bekor qilindi",
 };
