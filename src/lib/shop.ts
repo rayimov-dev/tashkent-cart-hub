@@ -33,16 +33,16 @@ type RawProduct = Record<string, unknown>;
 
 function mapProduct(p: RawProduct): Product {
   return {
-    id: String(p.id),
-    name: String(p.name ?? ""),
-    description: String(p.description ?? ""),
-    price: Number(p.price ?? 0),
-    old_price: p.old_price == null ? null : Number(p.old_price),
-    category: String(p.category ?? "Boshqa"),
-    is_popular: Boolean(p.is_popular),
-    image_url: (p.image_url as string | null) ?? null,
-    is_active: Boolean(p.is_active),
-    stock_quantity: Number(p.stock_quantity ?? 0),
+    id: String(p["id"]),
+    name: String(p["name"] ?? ""),
+    description: String(p["description"] ?? ""),
+    price: Number(p["price"] ?? 0),
+    old_price: p["old_price"] == null ? null : Number(p["old_price"]),
+    category: String(p["category"] ?? "Boshqa"),
+    is_popular: Boolean(p["is_popular"]),
+    image_url: (p["image_url"] as string | null) ?? null,
+    is_active: Boolean(p["is_active"]),
+    stock_quantity: Number(p["stock_quantity"] ?? 0),
   };
 }
 
