@@ -5,12 +5,12 @@ import { ProductCard } from "@/components/ProductCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CATEGORIES, productsQuery } from "@/lib/shop";
 
-type CatalogSearch = { kategoriya?: string; q?: string };
+type CatalogSearch = { kategoriya: string; q: string };
 
 export const Route = createFileRoute("/katalog")({
   validateSearch: (search: Record<string, unknown>): CatalogSearch => ({
-    kategoriya: typeof search["kategoriya"] === "string" ? search["kategoriya"] : undefined,
-    q: typeof search["q"] === "string" ? search["q"] : undefined,
+    kategoriya: typeof search["kategoriya"] === "string" ? search["kategoriya"] : "",
+    q: typeof search["q"] === "string" ? search["q"] : "",
   }),
   head: () => ({
     meta: [
@@ -47,7 +47,7 @@ function CatalogPage() {
         <div className="mt-4 flex flex-wrap gap-2">
           <Link
             to="/katalog"
-            search={{ kategoriya: undefined, q: undefined }}
+            search={{ kategoriya: "", q: "" }}
             className={`rounded-xl px-3 py-2 text-sm font-medium ${!kategoriya ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}
           >
             Hammasi
@@ -56,7 +56,7 @@ function CatalogPage() {
             <Link
               key={c.name}
               to="/katalog"
-              search={{ kategoriya: c.name, q: undefined }}
+              search={{ kategoriya: c.name, q: "" }}
               className={`rounded-xl px-3 py-2 text-sm font-medium ${kategoriya === c.name ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground"}`}
             >
               <span className="mr-1">{c.emoji}</span>

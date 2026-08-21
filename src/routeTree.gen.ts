@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdminKirishRouteImport } from './routes/admin-kirish'
 import { Route as BuyurtmalarimRouteImport } from './routes/buyurtmalarim'
+import { Route as KatalogRouteImport } from './routes/katalog'
 import { Route as KirishRouteImport } from './routes/kirish'
 import { Route as SavatRouteImport } from './routes/savat'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
@@ -39,6 +40,11 @@ const AdminKirishRoute = AdminKirishRouteImport.update({
 const BuyurtmalarimRoute = BuyurtmalarimRouteImport.update({
   id: '/buyurtmalarim',
   path: '/buyurtmalarim',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KatalogRoute = KatalogRouteImport.update({
+  id: '/katalog',
+  path: '/katalog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KirishRoute = KirishRouteImport.update({
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/admin-kirish': typeof AdminKirishRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
+  '/katalog': typeof KatalogRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
   '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin-kirish': typeof AdminKirishRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
+  '/katalog': typeof KatalogRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
   '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/admin-kirish': typeof AdminKirishRoute
   '/buyurtmalarim': typeof BuyurtmalarimRoute
+  '/katalog': typeof KatalogRoute
   '/kirish': typeof KirishRoute
   '/savat': typeof SavatRoute
   '/admin/buyurtmalar': typeof AdminBuyurtmalarRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin-kirish'
     | '/buyurtmalarim'
+    | '/katalog'
     | '/kirish'
     | '/savat'
     | '/admin/buyurtmalar'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin-kirish'
     | '/buyurtmalarim'
+    | '/katalog'
     | '/kirish'
     | '/savat'
     | '/admin/buyurtmalar'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin-kirish'
     | '/buyurtmalarim'
+    | '/katalog'
     | '/kirish'
     | '/savat'
     | '/admin/buyurtmalar'
@@ -162,6 +174,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AdminKirishRoute: typeof AdminKirishRoute
   BuyurtmalarimRoute: typeof BuyurtmalarimRoute
+  KatalogRoute: typeof KatalogRoute
   KirishRoute: typeof KirishRoute
   SavatRoute: typeof SavatRoute
 }
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/buyurtmalarim'
       fullPath: '/buyurtmalarim'
       preLoaderRoute: typeof BuyurtmalarimRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/katalog': {
+      id: '/katalog'
+      path: '/katalog'
+      fullPath: '/katalog'
+      preLoaderRoute: typeof KatalogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kirish': {
@@ -271,6 +291,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AdminKirishRoute: AdminKirishRoute,
   BuyurtmalarimRoute: BuyurtmalarimRoute,
+  KatalogRoute: KatalogRoute,
   KirishRoute: KirishRoute,
   SavatRoute: SavatRoute,
 }

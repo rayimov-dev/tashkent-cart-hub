@@ -26,7 +26,7 @@ export function Header() {
 
   function search(e: React.FormEvent) {
     e.preventDefault();
-    navigate({ to: "/katalog", search: { q: q.trim() || undefined, kategoriya: undefined } });
+    navigate({ to: "/katalog", search: { q: q.trim(), kategoriya: "" } });
   }
 
   return (
@@ -101,7 +101,7 @@ export function Header() {
               <Link
                 key={c.name}
                 to="/katalog"
-                search={{ kategoriya: c.name, q: undefined }}
+                search={{ kategoriya: c.name, q: "" }}
                 onClick={() => setOpenCats(false)}
                 className="rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground hover:bg-secondary/70"
               >
