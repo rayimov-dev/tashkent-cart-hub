@@ -41,7 +41,7 @@ function CatalogPage() {
       <Header />
       <main className="mx-auto max-w-6xl px-4 py-8">
         <h1 className="text-2xl font-extrabold">
-          {kategoriya ?? (q ? `"${q}" bo'yicha natijalar` : "Barcha mahsulotlar")}
+          {kategoriya || (q ? `"${q}" natijalari` : "Barcha mahsulotlar")}
         </h1>
 
         <div className="mt-4 flex flex-wrap gap-2">
