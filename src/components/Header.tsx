@@ -1,16 +1,21 @@
+import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { ShoppingBag, ShieldCheck, LogOut, User as UserIcon, Store } from "lucide-react";
+import { ShoppingBag, LogOut, User as UserIcon, Search, Menu } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSession } from "@/lib/auth";
 import { useCart } from "@/lib/cart";
+import { CATEGORIES } from "@/lib/shop";
 import { Button } from "@/components/ui/button";
-import { useQueryClient } from "@tanstack/react-query";
+import { Input } from "@/components/ui/input";
 
 export function Header() {
   const { user } = useSession();
   const { count } = useCart();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [q, setQ] = useState("");
+  const [openCats, setOpenCats] = useState(false);
 
   async function signOut() {
     await queryClient.cancelQueries();
@@ -19,37 +24,54 @@ export function Header() {
     navigate({ to: "/kirish", replace: true });
   }
 
+  function search(e: React.FormEvent) {
+    e.preventDefault();
+    navigate({ to: "/katalog", search: { q: q.trim(), kategoriya: "" } });
+  }
+
   return (
-    <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-3 px-4">
-        <Link to="/" className="flex items-center gap-2 font-extrabold text-lg text-foreground">
+        <Link to="/" className="flex shrink-0 items-center gap-2 text-lg font-extrabold">
           <span className="flex size-9 items-center justify-center rounded-xl hero-gradient text-primary-foreground">
-            <Store className="size-5" />
+            Y
           </span>
-          Bozorcha
+          <span className="hidden sm:inline">Yangikent Market</span>
         </Link>
 
-        <nav className="ml-auto flex items-center gap-1 sm:gap-2">
-          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-            <Link to="/">Katalog</Link>
-          </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          className="hidden shrink-0 rounded-xl lg:inline-flex"
+          onClick={() => setOpenCats((v) => !v)}
+        >
+          <Menu className="size-4" /> Katalog
+        </Button>
+
+        <form onSubmit={search} className="relative ml-auto w-full max-w-md">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Mahsulot qidirish"
+            aria-label="Mahsulot qidirish"
+            className="rounded-xl pl-9"
+          />
+        </form>
+
+        <nav className="flex shrink-0 items-center gap-1">
           {user ? (
             <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
               <Link to="/buyurtmalarim">Buyurtmalarim</Link>
             </Button>
           ) : null}
-          <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex">
-            <Link to="/admin">
-              <ShieldCheck className="size-4" /> Admin
-            </Link>
-          </Button>
 
-          <Button asChild variant="outline" size="sm" className="relative">
+          <Button asChild variant="ghost" size="sm" className="relative">
             <Link to="/savat">
               <ShoppingBag className="size-4" />
               <span className="hidden sm:inline">Savat</span>
               {count > 0 ? (
-                <span className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-accent text-[11px] font-bold text-accent-foreground">
+                <span className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full bg-accent text-[11px] font-bold text-accent-foreground">
                   {count}
                 </span>
               ) : null}
@@ -62,15 +84,34 @@ export function Header() {
               <span className="hidden sm:inline">Chiqish</span>
             </Button>
           ) : (
-            <Button asChild size="sm">
+            <Button asChild size="sm" className="rounded-xl">
               <Link to="/kirish">
                 <UserIcon className="size-4" />
-                Kirish
+                <span className="hidden sm:inline">Kirish</span>
               </Link>
             </Button>
           )}
         </nav>
       </div>
+
+      {openCats ? (
+        <div className="border-t border-border bg-card">
+          <div className="mx-auto flex max-w-6xl flex-wrap gap-2 px-4 py-3">
+            {CATEGORIES.map((c) => (
+              <Link
+                key={c.name}
+                to="/katalog"
+                search={{ kategoriya: c.name, q: "" }}
+                onClick={() => setOpenCats(false)}
+                className="rounded-xl bg-secondary px-3 py-2 text-sm font-medium text-secondary-foreground hover:bg-secondary/70"
+              >
+                <span className="mr-1">{c.emoji}</span>
+                {c.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 }
