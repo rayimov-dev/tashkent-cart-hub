@@ -6,6 +6,9 @@ export type Product = {
   name: string;
   description: string;
   price: number;
+  old_price: number | null;
+  category: string;
+  is_popular: boolean;
   image_url: string | null;
   is_active: boolean;
   stock_quantity: number;
@@ -16,6 +19,33 @@ export type StoreSettings = {
   free_delivery_threshold: number;
 };
 
+export const CATEGORIES = [
+  { name: "Oziq-ovqat", emoji: "🥫" },
+  { name: "Ichimliklar", emoji: "🥤" },
+  { name: "Maishiy texnika", emoji: "🔌" },
+  { name: "Go'zallik", emoji: "💄" },
+  { name: "Uy-ro'zg'or", emoji: "🧴" },
+  { name: "Bolalar uchun", emoji: "🧸" },
+  { name: "Boshqa", emoji: "📦" },
+];
+
+type RawProduct = Record<string, unknown>;
+
+function mapProduct(p: RawProduct): Product {
+  return {
+    id: String(p.id),
+    name: String(p.name ?? ""),
+    description: String(p.description ?? ""),
+    price: Number(p.price ?? 0),
+    old_price: p.old_price == null ? null : Number(p.old_price),
+    category: String(p.category ?? "Boshqa"),
+    is_popular: Boolean(p.is_popular),
+    image_url: (p.image_url as string | null) ?? null,
+    is_active: Boolean(p.is_active),
+    stock_quantity: Number(p.stock_quantity ?? 0),
+  };
+}
+
 export const productsQuery = (includeInactive = false) =>
   queryOptions({
     queryKey: ["products", includeInactive],
@@ -24,7 +54,7 @@ export const productsQuery = (includeInactive = false) =>
       if (!includeInactive) q = q.eq("is_active", true);
       const { data, error } = await q;
       if (error) throw error;
-      return (data ?? []).map((p) => ({ ...p, price: Number(p.price), stock_quantity: Number((p as { stock_quantity?: number }).stock_quantity ?? 0) })) as Product[];
+      return (data ?? []).map((p) => mapProduct(p as RawProduct));
     },
   });
 
@@ -51,6 +81,11 @@ export function computeDelivery(subtotal: number, settings: StoreSettings | unde
   const free = subtotal >= threshold && subtotal > 0;
   const delivery = free ? 0 : subtotal > 0 ? fee : 0;
   return { free, threshold, delivery, total: subtotal + delivery, remaining: Math.max(0, threshold - subtotal) };
+}
+
+export function discountPercent(p: Pick<Product, "price" | "old_price">) {
+  if (!p.old_price || p.old_price <= p.price) return null;
+  return Math.round(((p.old_price - p.price) / p.old_price) * 100);
 }
 
 export const STATUS_LABELS: Record<string, string> = {
