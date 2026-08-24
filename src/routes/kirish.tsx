@@ -11,9 +11,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 export const Route = createFileRoute("/kirish")({
   head: () => ({
     meta: [
-      { title: "Kirish va ro'yxatdan o'tish — Bozorcha" },
-      { name: "description", content: "Bozorcha onlayn do'koniga kiring yoki yangi mijoz hisobini yarating." },
-      { property: "og:title", content: "Kirish — Bozorcha" },
+      { title: "Kirish va ro'yxatdan o'tish — Yangikent Market" },
+      { name: "description", content: "Yangikent Market onlayn do'koniga kiring yoki yangi mijoz hisobini yarating." },
+      { property: "og:title", content: "Kirish — Yangikent Market" },
       { property: "og:description", content: "Mijoz hisobingizga kiring va buyurtma bering." },
     ],
   }),

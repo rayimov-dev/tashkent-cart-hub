@@ -18,12 +18,12 @@ import { formatSom } from "@/lib/format";
 export const Route = createFileRoute("/savat")({
   head: () => ({
     meta: [
-      { title: "Savat va buyurtma berish — Bozorcha" },
+      { title: "Savat va buyurtma berish — Yangikent Market" },
       {
         name: "description",
         content: "Savatingizni tekshiring, manzil va telefon kiriting hamda buyurtmani rasmiylashtiring.",
       },
-      { property: "og:title", content: "Savat — Bozorcha" },
+      { property: "og:title", content: "Savat — Yangikent Market" },
       { property: "og:description", content: "Buyurtmangizni rasmiylashtiring va yetkazib berishni tanlang." },
     ],
   }),
