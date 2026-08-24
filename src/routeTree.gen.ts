@@ -21,6 +21,7 @@ import { Route as AdminBuyurtmalarRouteImport } from './routes/admin.buyurtmalar
 import { Route as AdminMahsulotlarRouteImport } from './routes/admin.mahsulotlar'
 import { Route as AdminMijozlarRouteImport } from './routes/admin.mijozlar'
 import { Route as AdminSozlamalarRouteImport } from './routes/admin.sozlamalar'
+import { Route as MahsulotIdRouteImport } from './routes/mahsulot.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -82,6 +83,11 @@ const AdminSozlamalarRoute = AdminSozlamalarRouteImport.update({
   path: '/sozlamalar',
   getParentRoute: () => AdminRoute,
 } as any)
+const MahsulotIdRoute = MahsulotIdRouteImport.update({
+  id: '/mahsulot/$id',
+  path: '/mahsulot/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
   '/admin/mijozlar': typeof AdminMijozlarRoute
   '/admin/sozlamalar': typeof AdminSozlamalarRoute
+  '/mahsulot/$id': typeof MahsulotIdRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
   '/admin/mijozlar': typeof AdminMijozlarRoute
   '/admin/sozlamalar': typeof AdminSozlamalarRoute
+  '/mahsulot/$id': typeof MahsulotIdRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/admin/mahsulotlar': typeof AdminMahsulotlarRoute
   '/admin/mijozlar': typeof AdminMijozlarRoute
   '/admin/sozlamalar': typeof AdminSozlamalarRoute
+  '/mahsulot/$id': typeof MahsulotIdRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/admin/mahsulotlar'
     | '/admin/mijozlar'
     | '/admin/sozlamalar'
+    | '/mahsulot/$id'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/admin/mahsulotlar'
     | '/admin/mijozlar'
     | '/admin/sozlamalar'
+    | '/mahsulot/$id'
     | '/admin'
   id:
     | '__root__'
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/admin/mahsulotlar'
     | '/admin/mijozlar'
     | '/admin/sozlamalar'
+    | '/mahsulot/$id'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   KatalogRoute: typeof KatalogRoute
   KirishRoute: typeof KirishRoute
   SavatRoute: typeof SavatRoute
+  MahsulotIdRoute: typeof MahsulotIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSozlamalarRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/mahsulot/$id': {
+      id: '/mahsulot/$id'
+      path: '/mahsulot/$id'
+      fullPath: '/mahsulot/$id'
+      preLoaderRoute: typeof MahsulotIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -294,6 +314,7 @@ const rootRouteChildren: RootRouteChildren = {
   KatalogRoute: KatalogRoute,
   KirishRoute: KirishRoute,
   SavatRoute: SavatRoute,
+  MahsulotIdRoute: MahsulotIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
