@@ -41,6 +41,7 @@ function CartPage() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [note, setNote] = useState("");
+  const [payment, setPayment] = useState<"naqd" | "karta" | "click">("naqd");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -75,6 +76,7 @@ function CartPage() {
         note: note.trim() || null,
         subtotal,
         delivery_fee: delivery,
+        payment_method: payment,
         total,
       })
       .select("id")
@@ -209,6 +211,29 @@ function CartPage() {
                     onChange={(e) => setAddress(e.target.value)}
                     maxLength={300}
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>To'lov usuli</Label>
+                  <div className="grid gap-2 sm:grid-cols-3">
+                    {[
+                      { v: "naqd", l: "Naqd pul" },
+                      { v: "karta", l: "Karta (kuryerga)" },
+                      { v: "click", l: "Click / Payme" },
+                    ].map((o) => (
+                      <button
+                        key={o.v}
+                        type="button"
+                        onClick={() => setPayment(o.v as typeof payment)}
+                        className={`rounded-xl border p-3 text-sm font-medium transition ${
+                          payment === o.v
+                            ? "border-primary bg-secondary text-secondary-foreground"
+                            : "border-border hover:border-primary/50"
+                        }`}
+                      >
+                        {o.l}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="nt">Izoh (ixtiyoriy)</Label>
