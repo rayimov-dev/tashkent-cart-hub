@@ -1,4 +1,5 @@
 import { Plus } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/cart";
@@ -11,7 +12,7 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <article className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition hover:shadow-[var(--shadow-lift)]">
-      <div className="relative aspect-square overflow-hidden bg-muted">
+      <Link to="/mahsulot/$id" params={{ id: product.id }} className="relative block aspect-square overflow-hidden bg-muted">
         {product.image_url ? (
           <img
             src={product.image_url}
@@ -25,17 +26,20 @@ export function ProductCard({ product }: { product: Product }) {
             -{off}%
           </span>
         ) : null}
-      </div>
+      </Link>
 
       <div className="flex flex-1 flex-col gap-1 p-3">
         <p className="text-xs text-muted-foreground">{product.category}</p>
-        <h3 className="line-clamp-2 text-sm font-semibold leading-snug">{product.name}</h3>
+        <Link to="/mahsulot/$id" params={{ id: product.id }}>
+          <h3 className="line-clamp-2 text-sm font-semibold leading-snug hover:text-primary">{product.name}</h3>
+        </Link>
         <div className="mt-auto pt-2">
           {product.old_price && product.old_price > product.price ? (
             <p className="text-xs text-muted-foreground line-through">{formatSom(product.old_price)}</p>
           ) : null}
           <p className="text-base font-extrabold">{formatSom(product.price)}</p>
         </div>
+
         <Button
           size="sm"
           className="mt-2 w-full rounded-xl"

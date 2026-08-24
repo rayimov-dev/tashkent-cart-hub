@@ -12,9 +12,9 @@ import { formatSom } from "@/lib/format";
 export const Route = createFileRoute("/buyurtmalarim")({
   head: () => ({
     meta: [
-      { title: "Buyurtmalarim — Bozorcha" },
+      { title: "Buyurtmalarim — Yangikent Market" },
       { name: "description", content: "Bergan buyurtmalaringiz tarixi va ularning holatini kuzating." },
-      { property: "og:title", content: "Buyurtmalarim — Bozorcha" },
+      { property: "og:title", content: "Buyurtmalarim — Yangikent Market" },
       { property: "og:description", content: "Buyurtmalaringiz holatini real vaqtda kuzating." },
     ],
   }),

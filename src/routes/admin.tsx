@@ -19,10 +19,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Admin panel — Bozorcha" },
+      { title: "Admin panel — Yangikent Market" },
       { name: "description", content: "Mahsulotlar, buyurtmalar, mijozlar va yetkazib berish sozlamalari boshqaruvi." },
-      { property: "og:title", content: "Admin panel — Bozorcha" },
-      { property: "og:description", content: "Bozorcha do'koni boshqaruv paneli." },
+      { property: "og:title", content: "Admin panel — Yangikent Market" },
+      { property: "og:description", content: "Yangikent Market do'koni boshqaruv paneli." },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -90,7 +90,7 @@ function AdminLayout() {
           <span className="flex size-8 items-center justify-center rounded-lg hero-gradient text-primary-foreground">
             <Store className="size-4" />
           </span>
-          Bozorcha admin
+          Yangikent Market admin
         </div>
         <nav className="flex gap-1 overflow-x-auto px-2 pb-3 md:flex-col md:overflow-visible">
           {NAV.map((item) => {

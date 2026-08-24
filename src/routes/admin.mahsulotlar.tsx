@@ -11,14 +11,24 @@ import { Textarea } from "@/components/ui/textarea";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { productsQuery, type Product } from "@/lib/shop";
+import { CATEGORIES, productsQuery, type Product } from "@/lib/shop";
 import { formatSom } from "@/lib/format";
 
 export const Route = createFileRoute("/admin/mahsulotlar")({
   component: AdminProducts,
 });
 
-const emptyForm = { id: "", name: "", description: "", price: "", stock: "", image_url: "" };
+const emptyForm = {
+  id: "",
+  name: "",
+  description: "",
+  price: "",
+  old_price: "",
+  stock: "",
+  image_url: "",
+  category: "Boshqa",
+  is_popular: false,
+};
 
 function AdminProducts() {
   const queryClient = useQueryClient();
@@ -32,6 +42,9 @@ function AdminProducts() {
         name: form.name.trim(),
         description: form.description.trim(),
         price: Number(form.price) || 0,
+        old_price: form.old_price ? Number(form.old_price) : null,
+        category: form.category,
+        is_popular: form.is_popular,
         stock_quantity: Number(form.stock) || 0,
         image_url: form.image_url.trim() || null,
       };
@@ -67,6 +80,9 @@ function AdminProducts() {
       name: p.name,
       description: p.description,
       price: String(p.price),
+      old_price: p.old_price ? String(p.old_price) : "",
+      category: p.category,
+      is_popular: p.is_popular,
       stock: String(p.stock_quantity ?? 0),
       image_url: p.image_url ?? "",
     });
@@ -163,6 +179,42 @@ function AdminProducts() {
                 />
               </div>
             </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="po">Eski narx (chegirma uchun)</Label>
+                <Input
+                  id="po"
+                  type="number"
+                  min={0}
+                  value={form.old_price}
+                  onChange={(e) => setForm({ ...form, old_price: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="pc">Kategoriya</Label>
+                <select
+                  id="pc"
+                  className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm"
+                  value={form.category}
+                  onChange={(e) => setForm({ ...form, category: e.target.value })}
+                >
+                  {CATEGORIES.map((c) => (
+                    <option key={c.name} value={c.name}>
+                      {c.emoji} {c.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <label className="flex items-center gap-2 text-sm font-medium">
+              <input
+                type="checkbox"
+                className="size-4 accent-[var(--color-primary)]"
+                checked={form.is_popular}
+                onChange={(e) => setForm({ ...form, is_popular: e.target.checked })}
+              />
+              Mashhur mahsulot sifatida ko'rsatilsin
+            </label>
             <div className="space-y-2">
               <Label htmlFor="pi">Rasm havolasi (URL)</Label>
               <Input
