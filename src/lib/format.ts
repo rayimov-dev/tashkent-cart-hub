@@ -1,3 +1,5 @@
 export function formatSom(value: number): string {
-  return new Intl.NumberFormat("uz-UZ", { maximumFractionDigits: 0 }).format(value) + " so'm";
+  const n = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(value).replace(/,/g, " ");
+  return n + " so'm";
 }
+
