@@ -25,6 +25,16 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const CATEGORY_BG = [
+  "gradient-candy",
+  "gradient-sunset",
+  "gradient-ocean",
+  "gradient-lime",
+  "gradient-berry",
+  "gradient-sun",
+  "gradient-ocean",
+];
+
 function Index() {
   const { data: products, isLoading } = useQuery(productsQuery());
   const { data: settings } = useQuery(settingsQuery());
@@ -36,12 +46,14 @@ function Index() {
   const discounted = all.filter((p) => discountPercent(p)).slice(0, 8);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen app-bg">
       <Header />
 
       <section className="mx-auto max-w-6xl px-4 pt-6">
-        <div className="hero-gradient overflow-hidden rounded-3xl px-6 py-10 text-primary-foreground sm:px-10 sm:py-12">
-          <p className="text-sm font-semibold uppercase tracking-widest opacity-80">Chegirmalar haftaligi</p>
+        <div className="relative overflow-hidden rounded-[2rem] hero-gradient px-6 py-10 text-white shadow-[var(--shadow-lift)] sm:px-10 sm:py-14">
+          <span className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full bg-white/20 blur-2xl" />
+          <span className="pointer-events-none absolute -bottom-20 left-1/3 size-56 rounded-full bg-brand-yellow/40 blur-2xl" />
+          <p className="inline-block rounded-full bg-white/25 px-3 py-1 text-xs font-extrabold uppercase tracking-widest">Chegirmalar haftaligi 🎉</p>
           <h1 className="mt-3 max-w-xl text-3xl font-extrabold sm:text-5xl">
             Yangikent Market — 50% gacha chegirmalar
           </h1>
@@ -62,16 +74,19 @@ function Index() {
 
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
           {[
-            { icon: Truck, title: "Bepul yetkazish", text: `${formatSom(threshold)} dan yuqori buyurtmalarga` },
-            { icon: Percent, title: "Har kuni chegirma", text: "Tanlangan mahsulotlarga -30% gacha" },
-            { icon: Clock, title: "1-2 soatda", text: "Shahar bo'ylab tezkor yetkazish" },
+            { icon: Truck, title: "Bepul yetkazish", text: `${formatSom(threshold)} dan yuqori buyurtmalarga`, bg: "gradient-lime" },
+            { icon: Percent, title: "Har kuni chegirma", text: "Tanlangan mahsulotlarga -30% gacha", bg: "gradient-sunset" },
+            { icon: Clock, title: "1-2 soatda", text: "Shahar bo'ylab tezkor yetkazish", bg: "gradient-ocean" },
           ].map((f) => (
-            <div key={f.title} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-secondary-foreground">
+            <div
+              key={f.title}
+              className="flex items-start gap-3 rounded-3xl border-2 border-border bg-card p-4 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
+            >
+              <span className={`flex size-11 shrink-0 items-center justify-center rounded-2xl text-white ${f.bg}`}>
                 <f.icon className="size-5" />
               </span>
               <div>
-                <p className="font-semibold">{f.title}</p>
+                <p className="font-extrabold">{f.title}</p>
                 <p className="text-sm text-muted-foreground">{f.text}</p>
               </div>
             </div>
@@ -80,17 +95,17 @@ function Index() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 pt-8">
-        <h2 className="text-xl font-extrabold">Kategoriyalar</h2>
+        <h2 className="text-2xl font-extrabold">🛍️ Kategoriyalar</h2>
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {CATEGORIES.map((c) => (
+          {CATEGORIES.map((c, i) => (
             <Link
               key={c.name}
               to="/katalog"
               search={{ kategoriya: c.name, q: "" }}
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition hover:shadow-[var(--shadow-lift)]"
+              className={`flex items-center gap-3 rounded-3xl p-4 text-white shadow-[var(--shadow-card)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-lift)] ${CATEGORY_BG[i % CATEGORY_BG.length]}`}
             >
-              <span className="text-2xl">{c.emoji}</span>
-              <span className="text-sm font-semibold">{c.name}</span>
+              <span className="flex size-11 items-center justify-center rounded-2xl bg-white/25 text-2xl">{c.emoji}</span>
+              <span className="text-sm font-extrabold">{c.name}</span>
             </Link>
           ))}
         </div>
@@ -99,8 +114,8 @@ function Index() {
       {discounted.length > 0 ? (
         <section className="mx-auto max-w-6xl px-4 pt-10">
           <div className="flex items-end justify-between gap-4">
-            <h2 className="text-xl font-extrabold">Chegirmadagi mahsulotlar</h2>
-            <Link to="/katalog" search={{ kategoriya: "", q: "" }} className="text-sm font-semibold text-primary">
+            <h2 className="text-2xl font-extrabold">🔥 Chegirmadagi mahsulotlar</h2>
+            <Link to="/katalog" search={{ kategoriya: "", q: "" }} className="rounded-full bg-primary px-4 py-1.5 text-sm font-bold text-primary-foreground">
               Hammasi
             </Link>
           </div>
@@ -114,7 +129,7 @@ function Index() {
 
       <section className="mx-auto max-w-6xl px-4 py-10">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-xl font-extrabold">Mashhur mahsulotlar</h2>
+          <h2 className="text-2xl font-extrabold">⭐ Mashhur mahsulotlar</h2>
           {subtotal > 0 && remaining > 0 ? (
             <p className="text-sm text-muted-foreground">
               Bepul yetkazishgacha yana <b className="text-foreground">{formatSom(remaining)}</b>
