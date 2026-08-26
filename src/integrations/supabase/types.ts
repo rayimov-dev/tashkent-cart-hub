@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      addresses: {
+        Row: {
+          address: string
+          created_at: string
+          id: string
+          label: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+          zone_name: string | null
+        }
+        Insert: {
+          address: string
+          created_at?: string
+          id?: string
+          label?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+          zone_name?: string | null
+        }
+        Update: {
+          address?: string
+          created_at?: string
+          id?: string
+          label?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+          zone_name?: string | null
+        }
+        Relationships: []
+      }
       banners: {
         Row: {
           created_at: string
@@ -71,6 +104,54 @@ export type Database = {
         }
         Relationships: []
       }
+      couriers: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          phone: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          phone: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          phone?: string
+        }
+        Relationships: []
+      }
+      delivery_zones: {
+        Row: {
+          created_at: string
+          fee: number
+          id: string
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          fee?: number
+          id?: string
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          fee?: number
+          id?: string
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           id: string
@@ -116,6 +197,7 @@ export type Database = {
       orders: {
         Row: {
           address: string
+          courier_id: string | null
           created_at: string
           delivery_fee: number
           full_name: string
@@ -127,9 +209,11 @@ export type Database = {
           subtotal: number
           total: number
           user_id: string
+          zone_name: string | null
         }
         Insert: {
           address: string
+          courier_id?: string | null
           created_at?: string
           delivery_fee: number
           full_name: string
@@ -141,9 +225,11 @@ export type Database = {
           subtotal: number
           total: number
           user_id: string
+          zone_name?: string | null
         }
         Update: {
           address?: string
+          courier_id?: string | null
           created_at?: string
           delivery_fee?: number
           full_name?: string
@@ -155,17 +241,29 @@ export type Database = {
           subtotal?: number
           total?: number
           user_id?: string
+          zone_name?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "orders_courier_id_fkey"
+            columns: ["courier_id"]
+            isOneToOne: false
+            referencedRelation: "couriers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       products: {
         Row: {
           category: string
+          cost_price: number
           created_at: string
           description: string
           id: string
           image_url: string | null
+          images: string[]
           is_active: boolean
+          is_archived: boolean
           is_popular: boolean
           name: string
           old_price: number | null
@@ -174,11 +272,14 @@ export type Database = {
         }
         Insert: {
           category?: string
+          cost_price?: number
           created_at?: string
           description?: string
           id?: string
           image_url?: string | null
+          images?: string[]
           is_active?: boolean
+          is_archived?: boolean
           is_popular?: boolean
           name: string
           old_price?: number | null
@@ -187,11 +288,14 @@ export type Database = {
         }
         Update: {
           category?: string
+          cost_price?: number
           created_at?: string
           description?: string
           id?: string
           image_url?: string | null
+          images?: string[]
           is_active?: boolean
+          is_archived?: boolean
           is_popular?: boolean
           name?: string
           old_price?: number | null
@@ -223,21 +327,33 @@ export type Database = {
       }
       store_settings: {
         Row: {
+          app_name: string
           delivery_fee: number
           free_delivery_threshold: number
+          hero_subtitle: string
+          hero_title: string
           id: boolean
+          logo_url: string | null
           updated_at: string
         }
         Insert: {
+          app_name?: string
           delivery_fee?: number
           free_delivery_threshold?: number
+          hero_subtitle?: string
+          hero_title?: string
           id?: boolean
+          logo_url?: string | null
           updated_at?: string
         }
         Update: {
+          app_name?: string
           delivery_fee?: number
           free_delivery_threshold?: number
+          hero_subtitle?: string
+          hero_title?: string
           id?: boolean
+          logo_url?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -271,6 +387,18 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      place_order: {
+        Args: {
+          p_address: string
+          p_full_name: string
+          p_items: Json
+          p_note: string
+          p_payment: string
+          p_phone: string
+          p_zone: string
+        }
+        Returns: string
       }
     }
     Enums: {
