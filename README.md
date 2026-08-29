@@ -1,14 +1,36 @@
-# Welcome to your Lovable project
+# **Oson Savdo**
+
+Do'kon uchun onlayn buyurtma ilovasi (e-commerce web app) yarat. Talablar:
+
+1. Ikki xil foydalanuvchi turi, alohida login/parol bilan kirish:
+   - Mijozlar (customers) — ro'yxatdan o'tadi va o'z akkaunti bilan kiradi
+   - Adminlar (admins) — alohida admin panelga login/parol bilan kiradi (mijozlar admin panelga kira olmasin)
+
+2. Mijozlar uchun funksiyalar:
+   - Mahsulotlar katalogini ko'rish (rasm, nomi, narxi, tavsifi)
+   - Savatga qo'shish va buyurtma berish
+   - Yetkazib berish manzili va telefon raqamini kiritish
+   - Agar buyurtma summasi 50 000 so'mdan oshsa — yetkazib berish BEPUL bo'lsin, aks holda belgilangan yetkazib berish narxi (masalan 15 000 so'm) qo'shilsin. Bu hisob-kitob savat/checkout sahifasida avtomatik ko'rsatilsin.
+   - Buyurtmalar tarixini ko'rish
+
+3. Adminlar uchun funksiyalar (admin panel):
+   - Mahsulot qo'shish/tahrirlash/o'chirish
+   - Kelgan buyurtmalarni ko'rish va statusini o'zgartirish (yangi, tayyorlanmoqda, yetkazilmoqda, yetkazildi)
+   - Yetkazib berish narxi va bepul yetkazib berish chegarasini (hozircha 50 000 so'm) sozlash imkoniyati
+
+4. Dizayn: zamonaviy, toza, mobil qurilmalarga moslashgan (responsive), o'zbek tilida interfeys.
+
+Backend/autentifikatsiya uchun kerakli bo'lsa database yoqilsin (foydalanuvchi rollari: customer va admin ajratilgan holda).
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/68909205-92d4-4db4-8dda-7a81e629c439).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +42,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
